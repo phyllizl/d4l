@@ -22,4 +22,11 @@ class AppointmentViewSet(viewsets.ModelViewSet):
      serializer_class = AppointmentSerializer
      permission_classes = [permissions.AllowAny]
 
+     def get_queryset(self):
+          queryset = Appointment.objects.all()
+          query = self.request.query_params.get('doctor')
+          if query is not None:
+               queryset = queryset.filter(doctor_id=query)
+          return queryset
+
      

@@ -60,7 +60,7 @@
 
 -- INSERT INTO app_appointment (appointment_datetime, doctor_id, patient_id) SELECT appointment_datetime, doctor_id, patient_id FROM staging;
 
--- SELECT * FROM app_appointment;
+SELECT * FROM app_appointment;
 
 -- SELECT data_type FROM information_schema.columns WHERE 
 --     TABLE_NAME = 'staging' AND
