@@ -21,6 +21,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
         model = Appointment
         fields = ['id', 'doctor', 'patient', 'appointment_datetime']
     
+    # We want to unpack 'patient' in Appointment table so we can use the patient's information.
     def create (self, validated_data):
         patient_data = validated_data.pop('patient')
         patient = Patient.objects.create(**patient_data)

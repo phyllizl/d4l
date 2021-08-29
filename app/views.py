@@ -19,8 +19,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
      serializer_class = AppointmentSerializer
      permission_classes = [permissions.AllowAny]
 
-# select * from appointments JOIN patients ON patient.id = appointment.patient
-
+     # add logic to be able to filter appointments by doctor_id
      def get_queryset(self):
           queryset = Appointment.objects.all()
           query = self.request.query_params.get('doctor')
@@ -28,6 +27,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
                queryset = queryset.filter(doctor_id=query)
           return queryset
 
+     # add logic to be able to filter appointments by patient_id. 
      def get_queryset(self):
           queryset = Appointment.objects.all()
           query = self.request.query_params.get('patient')

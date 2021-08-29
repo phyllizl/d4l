@@ -19,6 +19,9 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     appointment_datetime = models.DateTimeField(default='timezone.now')
 
+    # Add constriants to prevent duplicates from being made. 
+    # (1) No patient can have 2 appointments at the same date and time
+    # (2) No doctor can have 2 appointments at the same date and time
     class Meta: 
         constraints = [
             models.UniqueConstraint(fields = ['patient_id', 'appointment_datetime'], name='unique_patient_booking'),
