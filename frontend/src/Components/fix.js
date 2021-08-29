@@ -38,11 +38,47 @@ const Fix = ({url, doctors}) => {
     }
 
     const handleSubmit = (event) => {
+        event.preventDefault();
+        let patientID = event.target.elements.pname.value
         
-        let dname = event.target.elements.dname.value;
-        console.log( dname);
+        //binary search
+        const searchPatient = (id, arr, first, last) => {
+            if (first > last) {
+                return ('not found');
+            }
+            let middleIndex = Math.floor((first + last) / 2)
+            if (id = arr[middleIndex].id) {
+                return arr[middleIndex]
+            }
+            else if (id < arr[middleIndex].id) {
+                return searchPatient(id, arr, first, middleIndex - 1)
+            }
+            else if (id > arr[middleIndex].id) {
+                return searchPatient(id, arr, middleIndex + 1, last)
+            }
+        }
 
+        let patient = searchPatient(patientID, patients, 0, patients.length - 1);
+        let doctor = event.target.elements.dname.value;
+        let time = (event.target.elements.time.value).slice(0, -3)
+        let datetime = `${event.target.elements.date.value} ${time}` ;
         
+        let appointmentInfo = {
+            doctor: doctor,
+            patient: patient,
+            appointment_datetime: datetime,
+        }
+        console.log(appointmentInfo)
+
+        const postNewAppointment = async (appointmentInfo) => {
+            const response = await fetch(`${url}appointments/`, {
+                method: "POST",
+                body: JSON.stringify(appointmentInfo),
+                headers: {"Content-Type": "application/json"},
+            });
+            return response;
+        };
+        postNewAppointment(appointmentInfo);
     }
 
     return (
@@ -103,6 +139,7 @@ const Fix = ({url, doctors}) => {
 
             <input type="submit"/>
         </form>
+
         </div>
     )
 }

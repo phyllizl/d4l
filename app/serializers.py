@@ -22,8 +22,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'doctor', 'patient', 'appointment_datetime']
     
     def create (self, validated_data):
-        patients_data = validated_data.pop('patients')
+        patient_data = validated_data.pop('patient')
+        patient = Patient.objects.create(**patient_data)
+        validated_data['patient'] = patient
         appointment = Appointment.objects.create(**validated_data)
-        for patient_data in patients_data:
-            Patient.objects.create(**patient_data)
         return appointment

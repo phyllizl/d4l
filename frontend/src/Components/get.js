@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {useHistory} from "react-router-dom";
 import Fix from "./fix";
+import Delete from "./delete";
 
 const Get = ({url, allAppointments}) => {
 
-    //url=localhost
-    //allappointments=8 appointment objects
-
     //get appointment by doctor id. 
-    //(url + 'appointments')
-    const history = useHistory();
     const [doctors, setDoctors] = useState([]);
     const [doctorAppointments, setDoctorAppointments] = useState([]);
-    const [patients, setPatients] = useState([]);
+    // const [patients, setPatients] = useState([]);
 
     useEffect(() => {
         const getDoctors = async () => {
@@ -64,6 +59,8 @@ const Get = ({url, allAppointments}) => {
                 })}
             </div>
             <Fix url={url} doctors={doctors} />
+            <Delete url={url} doctors={doctors} allAppointments={allAppointments} doctorAppointments={doctorAppointments} />
+            
         </div>
     )
 }
