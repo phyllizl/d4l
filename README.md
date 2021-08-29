@@ -1,3 +1,5 @@
+# Case Study (Data4Life)
+
 ## Tech Stack
 - PostgreSQL with Django (backend)
 - Reactjs (frontend)
