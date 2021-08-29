@@ -2,11 +2,11 @@ import React, {useState, useEffect} from "react"
 
 const Delete = ({url, allAppointments, doctors}) => {
 
-    const [docDelete, setDocDelete] = useState([]);
-    const [patients, setPatients] = useState([]);
-    const [patientDelete, setPatientDelete] = useState([]);
+    const [docDelete, setDocDelete] = useState([]); //state to store all appointments by a specific doctor
+    const [patients, setPatients] = useState([]); //state to store all patients in database
+    const [patientDelete, setPatientDelete] = useState([]); //state to store all appointments by a specific patient
 
-    //get list of patients
+    //fetch request to get all patients in database
     useEffect(() => {
         const getPatients = async () => {
             const response = await fetch(url + 'patients');
@@ -32,6 +32,7 @@ const Delete = ({url, allAppointments, doctors}) => {
         getPatientAppointments(patientID);
     }
 
+    //get all the appointments of a particular doctor
     const handleSubmit3 = (event) => {
         event.preventDefault()
         let doctorID = (event.target.value)
@@ -45,6 +46,7 @@ const Delete = ({url, allAppointments, doctors}) => {
         getDoctorAppointments(doctorID);
     }
 
+    //on click, the appointment will be deleted from our database.
     const handleClick = (event) => {
         event.preventDefault();
         let appointmentID = event.target.value;

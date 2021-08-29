@@ -4,24 +4,28 @@ import Delete from "./delete";
 
 const Get = ({url, allAppointments}) => {
 
-    //get appointment by doctor id. 
+    //get appointment by doctor_id. 
     const [doctors, setDoctors] = useState([]);
     const [doctorAppointments, setDoctorAppointments] = useState([]);
-    // const [patients, setPatients] = useState([]);
 
+    //fetch all the doctors in database
     useEffect(() => {
         const getDoctors = async () => {
           const response = await fetch(url + 'doctors');
           const data = await response.json();
+          //set doctors state to hold all doctors in database
           setDoctors(data);
         }
         getDoctors()
     }, [])
 
+    //on submit, get all appointments filtered by doctor_id
     const handleSubmit = (event) => {
         event.preventDefault()
+        //this is the specific doctor we want
         let doctorID = (event.target.value)
 
+        //this will put the specific doctor_id as a params - fetch call made for specific doctor's appointments 
         const getDoctorAppointments = async (doctorID) => {
             const response = await fetch(`${url}appointments/?doctor=${doctorID}`);
             const data = await response.json();
@@ -33,6 +37,7 @@ const Get = ({url, allAppointments}) => {
     return (
         <div>
             <form>
+                {/* List of doctors in database */}
                 <label for="doctors">Choose Doctor:</label>
                 <select id="doctors" name="doctors" onChange={handleSubmit}>
                     <option value='null' selected disabled>Select an Option</option>
@@ -43,6 +48,7 @@ const Get = ({url, allAppointments}) => {
                     })}
                 </select>
             </form>
+            {/* Details of the specific doctor's appointments */}
             <div>
                 {doctorAppointments.map((ele) => {
                     return (
